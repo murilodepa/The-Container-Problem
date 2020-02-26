@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1582749175 source:c:\users\muril\desktop\nova pasta\the-container-problem\the_container_problem\main.cpp
+	<iostream>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	<windows.h>
+
+1582576971 c:\users\muril\desktop\nova pasta\the-container-problem\the_container_problem\queue.h
+	<stdlib.h>
+
