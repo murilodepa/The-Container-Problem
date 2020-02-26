@@ -62,6 +62,9 @@ void printWithoutProducts();
 
 /// READ FILE PRODUCTS AND STORE IN STRUCT GOODS
 void readFileProducts (merchandise **, int *, int *);
+
+/// ANALYZE THE PRODUCTS THAT WILL BE IMPORTED
+Queue analyzeTheProducts (merchandise *, int, int, int *);
 //###############################################################################
 
 //#################################### MAIN #####################################
@@ -69,9 +72,14 @@ int main()
 {
     merchandise *products;
 
+    Queue queueOfProducts;
+    initQueue (queueOfProducts);
+
     int quantityOfProducts, maximumWeight, quantityOfProductImported;
 
     readFileProducts (&products, &quantityOfProducts, &maximumWeight);
+
+    queueOfProducts = analyzeTheProducts (products, quantityOfProducts, maximumWeight, &quantityOfProductImported);
 
     return 0;
 }
@@ -317,5 +325,60 @@ void readFileProducts (merchandise **products, int *quantityOfProducts, int *max
         exceedingLimit();
 
     fclose(inputFile);
+}
+//###############################################################################
+
+/// ANALYZE THE PRODUCTS THAT WILL BE IMPORTED
+Queue analyzeTheProducts (merchandise *products, int quantityOfProducts, int maximumWeight, int *quantityOfProductImported)
+{
+    Queue queueOfProducts;
+    initQueue (queueOfProducts);
+
+    (*quantityOfProductImported) = 0;
+
+    int cont1 = 0, sizeContainer = 0, result = 0, *positions, ProductImported = 0;
+
+    int **productMatrix = new int * [quantityOfProducts+1];
+
+    for (cont1 = 0; cont1 < quantityOfProducts+1; cont1++)
+        productMatrix[cont1] = new int[maximumWeight+1];
+
+    positions = (int *) malloc(quantityOfProducts * sizeof(int));
+
+    for (cont1 = 0; cont1 <= quantityOfProducts; cont1++)
+    {
+        for (sizeContainer = 0; sizeContainer <= maximumWeight; sizeContainer++)
+        {
+            if (cont1 == 0 || sizeContainer == 0)
+                productMatrix[cont1][sizeContainer] = 0;
+            else if (products[cont1-1].weight <= sizeContainer)
+                productMatrix[cont1][sizeContainer] = max(products[cont1-1].value + productMatrix[cont1-1][sizeContainer - products[cont1-1].weight], productMatrix[cont1-1][sizeContainer]);
+            else
+                productMatrix[cont1][sizeContainer] = productMatrix[cont1-1][sizeContainer];
+        }
+    }
+
+    result = productMatrix[quantityOfProducts][maximumWeight];
+    sizeContainer = maximumWeight;
+
+    for (cont1 = quantityOfProducts; cont1 > 0 && result > 0; cont1--)
+    {
+        if (result == productMatrix[cont1 - 1][sizeContainer])
+            continue;
+        else
+        {
+            // Include product in vector
+            positions[(*quantityOfProductImported)]=(cont1-1);
+            (*quantityOfProductImported)++;
+
+            result = (result - products[cont1-1].value);
+            sizeContainer = sizeContainer - products[cont1-1].weight;
+        }
+    }
+
+    for (ProductImported = (*quantityOfProductImported); ProductImported > 0; ProductImported--)
+        insertQueue (queueOfProducts, products[positions[ProductImported-1]]);
+
+    return queueOfProducts;
 }
 //###############################################################################
