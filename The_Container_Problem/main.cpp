@@ -39,6 +39,11 @@ typedef struct goods
 } merchandise;
 //###############################################################################
 
+/// DECLARING AND INCLUDING QUEUE LIBRARY
+typedef merchandise queueElement;
+#include "queue.h"
+//###############################################################################
+
 //#################### PROTOTYPE OF FUNCTIONS USED IN MAIN ######################
 /// CHANGES COLOR OF PRINTED CHARACTERS
 void chooseColor (int );
