@@ -74,23 +74,23 @@ int totalValue (Queue );
 
 /// RETURN THE RESULT OF THE TOTAL WEIGHT
 int totalWeight (Queue );
+
+/// PRINT THE TOTAL VALUE AND WEIGHT
+void printValueAndWeight (Queue, int);
 //###############################################################################
 
 //#################################### MAIN #####################################
 int main()
 {
     merchandise *products;
-
     Queue queueOfProducts;
-    initQueue (queueOfProducts);
-
     int quantityOfProducts, maximumWeight, quantityOfProductImported;
 
     readFileProducts (&products, &quantityOfProducts, &maximumWeight);
-
+    initQueue (queueOfProducts);
     queueOfProducts = analyzeTheProducts (products, quantityOfProducts, maximumWeight, &quantityOfProductImported);
-
     printQueueOfProducts (queueOfProducts);
+    printValueAndWeight (queueOfProducts, quantityOfProductImported);
 
     return 0;
 }
@@ -319,7 +319,7 @@ void readFileProducts (merchandise **products, int *quantityOfProducts, int *max
                 (*quantityOfProducts-=1);
         }
 
-        /* Print file in string format */
+        /* Print file in string format /
         cout << endl << " " << (*quantityOfProducts) << " - " << (*maximumWeight);
 
         for (cont1 = 0; cont1 < (*quantityOfProducts); cont1++)
@@ -329,7 +329,7 @@ void readFileProducts (merchandise **products, int *quantityOfProducts, int *max
             cout << endl << " VALUE: "        << (*products)[cont1].value;
             cout << endl << " WEIGHT: "       << (*products)[cont1].weight << endl << endl;
         }
-
+        */
 
     }
     else
@@ -585,5 +585,71 @@ int totalWeight (Queue queueOfProducts)
         resultTotalWeight += products.weight;
     }
     return resultTotalWeight;
+}
+//###############################################################################
+
+/// PRINT THE TOTAL VALUE AND WEIGHT
+void printValueAndWeight(Queue queueOfProducts, int quantityOfProductImported)
+{
+    int cont;
+
+    chooseColor(blue);
+    cout << endl << endl << "\t     \332";
+
+    for (cont = 0; cont < 2; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\304\304\304\302";
+
+    for (cont = 0; cont < 3; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\304\277" << endl << "\t     \263";
+
+    chooseColor(green);
+    cout << " TOTAL AMOUNT: ";
+
+    chooseColor(blue);
+    cout << "\263";
+
+    chooseColor(red);
+    printf(" USD %-13d", totalValue(queueOfProducts));
+
+    chooseColor(blue);
+    cout << " \263" << endl << "\t     \303";
+
+    for (cont = 0; cont < 2; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\304\304\304\305";
+
+    for (cont = 0; cont < 3; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\304\264" << endl << "\t     \263";
+
+    chooseColor(green);
+    cout << " TOTAL WEIGHT: ";
+
+    chooseColor(blue);
+    cout << "\263";
+
+    chooseColor(red);
+    printf (" %d g", totalWeight(queueOfProducts));
+
+    chooseColor(blue);
+    Goto_xy ((12 + (2 * quantityOfProductImported)), 46);
+    cout << "   \263" << endl << "\t     \300";
+
+    for (cont = 0; cont < 2; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\304\304\304\301";
+
+    for (cont = 0; cont < 3; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\304\331" << endl << endl << endl << endl;
+    chooseColor(white);
 }
 //###############################################################################
