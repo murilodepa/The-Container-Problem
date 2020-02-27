@@ -7,7 +7,7 @@
             COURSE: COMPUTER ENGINEERING     PERIOD: 4º SEMESTER
             SUBJECT: DATA STRUCTURES B
 
-                    FINAL WORK - "THE CONTAINER PROBLEM"
+             (OPTIONAL WORK) - FINAL WORK - "THE CONTAINER PROBLEM"
 */
 //################################### LIBRARY ###################################
 #include <iostream>

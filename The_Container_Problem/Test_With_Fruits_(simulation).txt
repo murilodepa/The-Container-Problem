@@ -1,0 +1,41 @@
+40 50000
+1,  Abacate,		 12,	600
+2,  Abacaxi,		 8,	1400
+3,  Acerola,		 9,	1000
+4,  Amora,		 96,	2000
+5,  Banana prata,	 8,	3000
+6,  Cacau,		 12,	1000
+7,  Caqui,		 15,	5000
+8,  Carambola,		 18,	3000
+9,  Cereja,	 	 98,	2000
+10, Coco seco,		 10,	4000
+11, Caju,		 9,	1000
+12, Damasco,		 37,	2000
+13, Figo,		 20,	8000
+14, Framboesa dourada,	 150,	1000
+15, Goiaba,		 9,	3000
+16, Groselha,		 10,	1000
+17, Graviola nordestina, 24,	2000
+18, Jabuticaba,		 48,	3000
+19, Jaca,		 30,	10000
+20, Jambo,		 12,	1800
+21, Kiwi,		 24,	2000
+22, Limao cravo,	 13,	5000
+23, Laranja,		 16,	4000
+24, Maca nacional,	 16,	2000
+25, Manga,		 24,	3000
+26, Melao,		 28,	4000
+27, Melancia,		 35,	20000
+28, Mamao,		 16,	4000
+29, Maracuja,		 32,	3000
+30, Morango,		 25,	2000
+31, Pequi,		 40,	25000
+32, Pera,		 35,	5000
+33, Pessego,		 11,	3000
+34, Pitanga,		 70,	1000
+35, Pitaya,		 300,	3000
+36, Roma,		 150,	3000
+37, Siriguela,		 50,	1000
+38, Tamarindo,		 60,	4000
+39, Tangerina,		 14,	4000
+40, Uva,		 16,	1000
