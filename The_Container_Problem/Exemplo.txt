@@ -1,0 +1,8 @@
+6 100
+AAAAA, Prod A, 2, 2
+BBBB, Prod B, 50, 25
+CCC, Prod C, 47, 50
+DDDD, Prod D, 100, 99
+EEEEE, Prod E, 30, 3
+FFF, Prod F, 120, 30
+
