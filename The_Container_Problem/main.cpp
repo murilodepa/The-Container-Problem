@@ -49,7 +49,7 @@ typedef merchandise queueElement;
 void chooseColor (int );
 
 /// GO TO POSITION (LINES AND COLUMNS)
-void Goto_xy (int lin, int col);
+void Goto_xy (int , int );
 
 /// VALIDATE FILE AND RETURN ONLY READ FILE
 FILE * validatingTheFile ();
@@ -58,22 +58,22 @@ FILE * validatingTheFile ();
 void exceedingLimit ();
 
 /// PRINT NO PRODUCTS IN FILE
-void printWithoutProducts();
+void printWithoutProducts ();
 
 /// PRINT THE CONTAINER DOES NOT SUPPORT ANY PRODUCTS
-void printHeavierProducts();
+void printHeavierProducts ();
 
 /// PRINT ERROR! CODE WITH MORE THAN 5 DIGITS!
-void errorInCode();
+void errorInCode ();
 
 /// PRINT ERROR! DESCRIPTION WITH MORE THAN 20 DIGITS!
-void errorInDescription();
+void errorInDescription ();
 
 /// READ FILE PRODUCTS AND STORE IN STRUCT GOODS
-void readFileProducts (merchandise **, int *, int *);
+void readFileProducts (merchandise **, int * , int * );
 
 /// ANALYZE THE PRODUCTS THAT WILL BE IMPORTED
-Queue analyzeTheProducts (merchandise *, int, int, int *);
+Queue analyzeTheProducts (merchandise * , int , int , int * );
 
 /// PRINT THE CONTENTS OF THE QUEUE
 void printQueueOfProducts (Queue );
@@ -85,7 +85,10 @@ int totalValue (Queue );
 int totalWeight (Queue );
 
 /// PRINT THE TOTAL VALUE AND WEIGHT
-void printValueAndWeight (Queue, int);
+void printValueAndWeight (Queue, int );
+
+/// CLEANING THE FIELDS OF THE STRUCT
+void clearStruct (merchandise **, int * , int * );
 //###############################################################################
 
 //#################################### MAIN #####################################
@@ -100,6 +103,19 @@ int main()
     queueOfProducts = analyzeTheProducts (products, quantityOfProducts, maximumWeight, &quantityOfProductImported);
     printQueueOfProducts (queueOfProducts);
     printValueAndWeight (queueOfProducts, quantityOfProductImported);
+
+    clearStruct (&products, &quantityOfProducts, &maximumWeight);
+
+    // Print file in string format /
+    cout << endl << " " << quantityOfProducts << " - " << maximumWeight;
+
+    for (int cont1 = 0; cont1 < quantityOfProducts; cont1++)
+    {
+        cout << endl << endl << " CODE: " << products[cont1].code;
+        cout << endl << " DESCRIPTION: "  << products[cont1].description;
+        cout << endl << " VALUE: "        << products[cont1].value;
+        cout << endl << " WEIGHT: "       << products[cont1].weight << endl << endl;
+    }
 
     return 0;
 }
@@ -125,7 +141,7 @@ void chooseColor (int color)
 //###############################################################################
 
 //FUNÇÃO PARA REFERENCIAR LINHAS E COLUNAS PARA IMPRESSÃO
-void Goto_xy(int lin, int col)
+void Goto_xy(int row, int column)
 {
     HANDLE Saida;
 
@@ -133,8 +149,8 @@ void Goto_xy(int lin, int col)
 
     Saida = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    Posicao.X = col;
-    Posicao.Y = lin;
+    Posicao.X = column;
+    Posicao.Y = row;
 
     SetConsoleCursorPosition(Saida, Posicao);
 }
@@ -357,9 +373,9 @@ void errorInDescription()
 //###############################################################################
 
 /// READ FILE PRODUCTS AND STORE IN STRUCT GOODS
-void readFileProducts (merchandise **products, int *quantityOfProducts, int *maximumWeight)
+void readFileProducts (merchandise ** products, int * quantityOfProducts, int * maximumWeight)
 {
-    int cont1=0, cont2=0;
+    int cont1 = 0, cont2 = 0;
     char character;
     bool structProductsEmpty = true;
 
@@ -378,7 +394,7 @@ void readFileProducts (merchandise **products, int *quantityOfProducts, int *max
     while (character == ' ' || character == ',' || character == '\n')
         character = fgetc(inputFile);
 
-    if (*quantityOfProducts <=100 && *maximumWeight <= 1000000)
+    if ((*quantityOfProducts) <= 100 && (*maximumWeight) <= 1000000)
     {
         *products = (merchandise *) malloc((*quantityOfProducts) * sizeof(merchandise));
 
@@ -389,29 +405,29 @@ void readFileProducts (merchandise **products, int *quantityOfProducts, int *max
                 if (cont2 == 5)
                     errorInCode();
 
-                (*products)[cont1].code[cont2]=character;
+                (*products)[cont1].code[cont2] = character;
                 cont2+=1;
                 character = fgetc(inputFile);
             }
 
-            ((*products)[cont1].code[cont2])='\0';
+            ((*products)[cont1].code[cont2]) = '\0';
 
             while (character == ' ' || character == ',')
                 character = fgetc(inputFile);
 
-            cont2=0;
+            cont2 = 0;
 
             while (character != ',')
             {
                 if (cont2 == 20)
                     errorInDescription();
 
-                (*products)[cont1].description[cont2]=character;
-                cont2+=1;
+                (*products)[cont1].description[cont2] = character;
+                cont2 += 1;
                 character = fgetc(inputFile);
             }
 
-            ((*products)[cont1].code[cont2])='\0';
+            ((*products)[cont1].code[cont2]) = '\0';
             cont2=0;
 
             fscanf(inputFile,"%d", &(*products)[cont1].value);
@@ -424,12 +440,13 @@ void readFileProducts (merchandise **products, int *quantityOfProducts, int *max
                 character = fgetc(inputFile);
 
             /* Implementing first heuristics */
-            if ((*products)[cont1].weight <= *maximumWeight){
-                cont1+=1;
+            if ((*products)[cont1].weight <= *maximumWeight)
+            {
+                cont1 += 1;
                 structProductsEmpty = false;
             }
             else
-                (*quantityOfProducts-=1);
+                (*quantityOfProducts -= 1);
         }
 
         /* Print file in string format /
@@ -455,7 +472,7 @@ void readFileProducts (merchandise **products, int *quantityOfProducts, int *max
 //###############################################################################
 
 /// ANALYZE THE PRODUCTS THAT WILL BE IMPORTED
-Queue analyzeTheProducts (merchandise *products, int quantityOfProducts, int maximumWeight, int *quantityOfProductImported)
+Queue analyzeTheProducts (merchandise * products, int quantityOfProducts, int maximumWeight, int * quantityOfProductImported)
 {
     Queue queueOfProducts;
     initQueue (queueOfProducts);
@@ -464,10 +481,10 @@ Queue analyzeTheProducts (merchandise *products, int quantityOfProducts, int max
 
     int cont1 = 0, sizeContainer = 0, result = 0, *positions, ProductImported = 0;
 
-    int **productMatrix = new int * [quantityOfProducts+1];
+    int **productMatrix = new int * [quantityOfProducts + 1];
 
     for (cont1 = 0; cont1 < quantityOfProducts+1; cont1++)
-        productMatrix[cont1] = new int[maximumWeight+1];
+        productMatrix[cont1] = new int[maximumWeight + 1];
 
     positions = (int *) malloc(quantityOfProducts * sizeof(int));
 
@@ -478,9 +495,9 @@ Queue analyzeTheProducts (merchandise *products, int quantityOfProducts, int max
             if (cont1 == 0 || sizeContainer == 0)
                 productMatrix[cont1][sizeContainer] = 0;
             else if (products[cont1-1].weight <= sizeContainer)
-                productMatrix[cont1][sizeContainer] = max(products[cont1-1].value + productMatrix[cont1-1][sizeContainer - products[cont1-1].weight], productMatrix[cont1-1][sizeContainer]);
+                productMatrix[cont1][sizeContainer] = max (products[cont1 - 1].value + productMatrix[cont1 - 1][sizeContainer - products[cont1 - 1].weight], productMatrix[cont1 - 1][sizeContainer]);
             else
-                productMatrix[cont1][sizeContainer] = productMatrix[cont1-1][sizeContainer];
+                productMatrix[cont1][sizeContainer] = productMatrix[cont1 - 1][sizeContainer];
         }
     }
 
@@ -494,16 +511,16 @@ Queue analyzeTheProducts (merchandise *products, int quantityOfProducts, int max
         else
         {
             // Include product in vector
-            positions[(*quantityOfProductImported)]=(cont1-1);
+            positions[(*quantityOfProductImported)] = (cont1 - 1);
             (*quantityOfProductImported)++;
 
-            result = (result - products[cont1-1].value);
-            sizeContainer = sizeContainer - products[cont1-1].weight;
+            result = (result - products[cont1 - 1].value);
+            sizeContainer = sizeContainer - products[cont1 - 1].weight;
         }
     }
 
     for (ProductImported = (*quantityOfProductImported); ProductImported > 0; ProductImported--)
-        insertQueue (queueOfProducts, products[positions[ProductImported-1]]);
+        insertQueue (queueOfProducts, products[positions[ProductImported - 1]]);
 
     return queueOfProducts;
 }
@@ -768,3 +785,22 @@ void printValueAndWeight(Queue queueOfProducts, int quantityOfProductImported)
     chooseColor(white);
 }
 //###############################################################################
+
+/// CLEANING THE FIELDS OF THE STRUCT
+void clearStruct (merchandise **products, int * quantityOfProducts, int * maximumWeight)
+{
+
+    int cont = 0, cont2 = 0;
+
+    while (cont < (*quantityOfProducts))
+    {
+        (*products)[cont].code[cont2] = '\0';
+        (*products)[cont].description[cont2] = '\0';
+        (*products)[cont].value = 0;
+        (*products)[cont].weight = 0;
+        cont++;
+    }
+
+  //  (*quantityOfProducts) = 0;
+    (*maximumWeight) = 0;
+}
