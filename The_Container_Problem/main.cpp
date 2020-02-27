@@ -30,10 +30,10 @@ using namespace std;
 //###############################################################################
 
 /// DECLARING STRUCT GOODS WITH YOURS FIELDS
-typedef struct goods
+typedef struct
 {
-    char code        [300];
-    char description [300];
+    char code        [200];
+    char description [200];
     int  value;
     int  weight;
 } merchandise;
@@ -62,6 +62,12 @@ void printWithoutProducts();
 
 /// PRINT THE CONTAINER DOES NOT SUPPORT ANY PRODUCTS
 void printHeavierProducts();
+
+/// PRINT ERROR! CODE WITH MORE THAN 5 DIGITS!
+void errorInCode();
+
+/// PRINT ERROR! DESCRIPTION WITH MORE THAN 20 DIGITS!
+void errorInDescription();
 
 /// READ FILE PRODUCTS AND STORE IN STRUCT GOODS
 void readFileProducts (merchandise **, int *, int *);
@@ -181,6 +187,8 @@ FILE * validatingTheFile ()
             chooseColor(white);
             cin >> fileName;
 
+            strcat(fileName, ".txt");
+
             // Opening file to read the data
             inputFile = fopen(fileName, "r");
             // exit(1);
@@ -286,7 +294,67 @@ void printHeavierProducts()
 }
 //###############################################################################
 
+/// PRINT ERROR! CODE WITH MORE THAN 5 DIGITS!
+void errorInCode()
+{
+    int cont;
 
+    system("cls");
+
+    chooseColor(blue);
+    cout << endl << "   \332";
+
+    for (cont = 0; cont < 8; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\277 " << endl << "   \263";
+
+    chooseColor(red);
+    cout << "      ERROR! CODE WITH MORE THAN 5 DIGITS!";
+
+    chooseColor(blue);
+    cout << "      \263 \n   \300";
+
+    for (cont = 0; cont < 8; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\331 "<< endl << endl << endl;
+
+    chooseColor(white);
+    exit(1);
+}
+//###############################################################################
+
+/// PRINT ERROR! DESCRIPTION WITH MORE THAN 20 DIGITS!
+void errorInDescription()
+{
+    int cont;
+
+    system("cls");
+
+    chooseColor(blue);
+    cout << endl << "   \332";
+
+    for (cont = 0; cont < 8; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\277 " << endl << "   \263";
+
+    chooseColor(red);
+    cout << "  ERROR! DESCRIPTION WITH MORE THAN 20 DIGITS!";
+
+    chooseColor(blue);
+    cout << "  \263 \n   \300";
+
+    for (cont = 0; cont < 8; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\331 "<< endl << endl << endl;
+
+    chooseColor(white);
+    exit(1);
+}
+//###############################################################################
 
 /// READ FILE PRODUCTS AND STORE IN STRUCT GOODS
 void readFileProducts (merchandise **products, int *quantityOfProducts, int *maximumWeight)
@@ -318,6 +386,9 @@ void readFileProducts (merchandise **products, int *quantityOfProducts, int *max
         {
             while ((character != ' ') && (character != ','))
             {
+                if (cont2 == 5)
+                    errorInCode();
+
                 (*products)[cont1].code[cont2]=character;
                 cont2+=1;
                 character = fgetc(inputFile);
@@ -332,6 +403,9 @@ void readFileProducts (merchandise **products, int *quantityOfProducts, int *max
 
             while (character != ',')
             {
+                if (cont2 == 20)
+                    errorInDescription();
+
                 (*products)[cont1].description[cont2]=character;
                 cont2+=1;
                 character = fgetc(inputFile);
@@ -438,7 +512,7 @@ Queue analyzeTheProducts (merchandise *products, int quantityOfProducts, int max
 /// PRINT THE CONTENTS OF THE QUEUE
 void printQueueOfProducts (Queue queueOfProducts)
 {
-    goods products;
+    merchandise products;
     int cont;
 
     chooseColor(blue);
@@ -602,7 +676,7 @@ void printQueueOfProducts (Queue queueOfProducts)
 /// RETURN THE RESULT OF THE TOTAL VALUE
 int totalValue (Queue queueOfProducts)
 {
-    goods products;
+    merchandise products;
     int resultTotalValue = 0;
 
     while (!isEmptyQueue (queueOfProducts))
@@ -617,7 +691,7 @@ int totalValue (Queue queueOfProducts)
 /// RETURN THE RESULT OF THE TOTAL WEIGHT
 int totalWeight (Queue queueOfProducts)
 {
-    goods products;
+    merchandise products;
     int resultTotalWeight = 0;
 
     while (!isEmptyQueue (queueOfProducts))
