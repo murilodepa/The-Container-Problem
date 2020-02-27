@@ -65,6 +65,9 @@ void readFileProducts (merchandise **, int *, int *);
 
 /// ANALYZE THE PRODUCTS THAT WILL BE IMPORTED
 Queue analyzeTheProducts (merchandise *, int, int, int *);
+
+/// PRINT THE CONTENTS OF THE QUEUE
+void printQueueOfProducts (Queue );
 //###############################################################################
 
 //#################################### MAIN #####################################
@@ -80,6 +83,8 @@ int main()
     readFileProducts (&products, &quantityOfProducts, &maximumWeight);
 
     queueOfProducts = analyzeTheProducts (products, quantityOfProducts, maximumWeight, &quantityOfProductImported);
+
+    printQueueOfProducts (queueOfProducts);
 
     return 0;
 }
@@ -380,5 +385,169 @@ Queue analyzeTheProducts (merchandise *products, int quantityOfProducts, int max
         insertQueue (queueOfProducts, products[positions[ProductImported-1]]);
 
     return queueOfProducts;
+}
+//###############################################################################
+
+/// PRINT THE CONTENTS OF THE QUEUE
+void printQueueOfProducts (Queue queueOfProducts)
+{
+    goods products;
+    int cont;
+
+    chooseColor(blue);
+    printf("\n   \332");
+
+    for (cont = 0; cont < 9; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\304\277" << endl << "   \263";
+
+    chooseColor(green);
+    cout << "\t\t  PRODUCTS CHOSEN FOR IMPORT";
+
+    chooseColor(blue);
+    cout << "\t\t   \263 \n   \303\304\304\304\304\304\304\302";
+
+    for (cont = 0; cont < 4; cont++)
+        cout << "\304\304\304\304\304";
+
+    cout << "\304\302";
+
+    for (cont = 0; cont < 3; cont++)
+        cout << "\304\304\304\304";
+
+    cout << "\304\302";
+
+    for (cont = 0; cont < 3; cont++)
+        cout << "\304\304\304\304";
+
+    cout << "\264" << endl << "   \263";
+
+    chooseColor(red);
+    cout << " CODE ";
+
+    chooseColor(blue);
+    cout << "\263";
+
+    chooseColor(red);
+    cout << "     DESCRIPTION     ";
+
+    chooseColor(blue);
+    cout << "\263";
+
+    chooseColor(red);
+    cout << " VALUE (USD) ";
+
+    chooseColor(blue);
+    cout << "\263";
+
+    chooseColor(red);
+    cout << " WEIGHT (g) ";
+
+    chooseColor(blue);
+    cout << "\263" << endl << "   \303\304\304\304\304\304\304\301";
+
+    for (cont = 0; cont < 4; cont++)
+        cout << "\304\304\304\304\304";
+
+    cout << "\304\301";
+
+    for (cont = 0; cont < 3; cont++)
+        cout <<"\304\304\304\304";
+
+    cout << "\304\301";
+
+    for (cont = 0; cont < 3; cont++)
+        cout <<"\304\304\304\304";
+
+    cout << "\264";
+
+    cout << endl << "   \263 \t\t\t\t\t\t\t   \263" << endl << "   \303\304\304\304\304\304\304\302";
+
+    for (cont = 0; cont < 4; cont++)
+        cout <<"\304\304\304\304\304";
+
+    cout << "\304\302";
+
+    for (cont = 0; cont < 3; cont++)
+        cout <<"\304\304\304\304";
+
+    cout << "\304\302";
+
+    for (cont = 0; cont < 3; cont++)
+        cout <<"\304\304\304\304";
+
+    cout << "\264";
+
+    while (!isEmptyQueue(queueOfProducts))
+    {
+        products = eliminate(queueOfProducts);
+
+        chooseColor(blue);
+        cout << endl << "   \263";
+
+        chooseColor(red);
+        printf("%-6s", products.code);
+
+        chooseColor(blue);
+        cout << "\263";
+
+        chooseColor(red);
+        printf("%-21s", products.description);
+
+        chooseColor(blue);
+        cout << "\263";
+
+        chooseColor(red);
+        printf("%-13d", products.value);
+
+        chooseColor(blue);
+        cout << "\263";
+
+        chooseColor(red);
+        printf("%-12d", products.weight);
+
+        chooseColor(blue);
+        cout << "\263";
+
+        if (!isEmptyQueue(queueOfProducts))
+        {
+            cout << endl << "   \303\304\304\304\304\304\304\305";
+
+            for (cont = 0; cont < 4; cont++)
+                cout <<"\304\304\304\304\304";
+
+            cout << "\304\305";
+
+            for (cont = 0; cont < 3; cont++)
+                cout <<"\304\304\304\304";
+
+            cout << "\304\305";
+
+            for (cont = 0; cont < 3; cont++)
+                cout <<"\304\304\304\304";
+
+            cout << "\264";
+        }
+        else
+        {
+            cout << endl << "   \300\304\304\304\304\304\304\301";
+
+            for (cont = 0; cont < 4; cont++)
+                cout <<"\304\304\304\304\304";
+
+            cout << "\304\301";
+
+            for (cont = 0; cont < 3; cont++)
+                cout <<"\304\304\304\304";
+
+            cout << "\304\301";
+
+            for (cont = 0; cont < 3; cont++)
+                cout <<"\304\304\304\304";
+
+            cout << "\331";
+        }
+    }
 }
 //###############################################################################
