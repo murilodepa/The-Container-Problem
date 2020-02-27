@@ -68,6 +68,12 @@ Queue analyzeTheProducts (merchandise *, int, int, int *);
 
 /// PRINT THE CONTENTS OF THE QUEUE
 void printQueueOfProducts (Queue );
+
+/// RETURN THE RESULT OF THE TOTAL VALUE
+int totalValue (Queue );
+
+/// RETURN THE RESULT OF THE TOTAL WEIGHT
+int totalWeight (Queue );
 //###############################################################################
 
 //#################################### MAIN #####################################
@@ -549,5 +555,35 @@ void printQueueOfProducts (Queue queueOfProducts)
             cout << "\331";
         }
     }
+}
+//###############################################################################
+
+/// RETURN THE RESULT OF THE TOTAL VALUE
+int totalValue (Queue queueOfProducts)
+{
+    goods products;
+    int resultTotalValue = 0;
+
+    while (!isEmptyQueue (queueOfProducts))
+    {
+        products = eliminate (queueOfProducts);
+        resultTotalValue += products.value;
+    }
+    return resultTotalValue;
+}
+//###############################################################################
+
+/// RETURN THE RESULT OF THE TOTAL WEIGHT
+int totalWeight (Queue queueOfProducts)
+{
+    goods products;
+    int resultTotalWeight = 0;
+
+    while (!isEmptyQueue (queueOfProducts))
+    {
+        products = eliminate (queueOfProducts);
+        resultTotalWeight += products.weight;
+    }
+    return resultTotalWeight;
 }
 //###############################################################################
