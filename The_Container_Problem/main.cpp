@@ -60,6 +60,9 @@ void exceedingLimit ();
 /// PRINT NO PRODUCTS IN FILE
 void printWithoutProducts();
 
+/// PRINT THE CONTAINER DOES NOT SUPPORT ANY PRODUCTS
+void printHeavierProducts();
+
 /// READ FILE PRODUCTS AND STORE IN STRUCT GOODS
 void readFileProducts (merchandise **, int *, int *);
 
@@ -252,11 +255,45 @@ void printWithoutProducts()
 }
 //###############################################################################
 
+/// PRINT THE CONTAINER DOES NOT SUPPORT ANY PRODUCTS
+void printHeavierProducts()
+{
+    int cont;
+
+    system("cls");
+
+    chooseColor(blue);
+    cout << endl << "   \332";
+
+    for (cont = 0; cont < 8; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\277 " << endl << "   \263";
+
+    chooseColor(red);
+    cout << "   THE CONTAINER DOESN'T SUPPORT ANY PRODUCTS";
+
+    chooseColor(blue);
+    cout << "   \263 \n   \300";
+
+    for (cont = 0; cont < 8; cont++)
+        cout << "\304\304\304\304\304\304";
+
+    cout << "\331 "<< endl << endl << endl;
+
+    chooseColor(white);
+    exit(1);
+}
+//###############################################################################
+
+
+
 /// READ FILE PRODUCTS AND STORE IN STRUCT GOODS
 void readFileProducts (merchandise **products, int *quantityOfProducts, int *maximumWeight)
 {
     int cont1=0, cont2=0;
     char character;
+    bool structProductsEmpty = true;
 
     FILE *inputFile; /* Defining a file type variable */
 
@@ -313,8 +350,10 @@ void readFileProducts (merchandise **products, int *quantityOfProducts, int *max
                 character = fgetc(inputFile);
 
             /* Implementing first heuristics */
-            if ((*products)[cont1].weight <= *maximumWeight)
+            if ((*products)[cont1].weight <= *maximumWeight){
                 cont1+=1;
+                structProductsEmpty = false;
+            }
             else
                 (*quantityOfProducts-=1);
         }
@@ -331,6 +370,8 @@ void readFileProducts (merchandise **products, int *quantityOfProducts, int *max
         }
         */
 
+        if (structProductsEmpty == true)
+            printHeavierProducts();
     }
     else
         exceedingLimit();
