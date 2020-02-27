@@ -1,4 +1,4 @@
 3 270
-P0001, Escova de Dentes Avv, 2, 10
+P0001, Escova de Dentes A, 2, 10
 XYZ2,Livro A, 15,260
 ZY2, Artefato B, 500,280

@@ -49,7 +49,7 @@ typedef merchandise queueElement;
 void chooseColor (int );
 
 /// GO TO POSITION (LINES AND COLUMNS)
-void Goto_xy (int , int );
+void goto_XY (int, int );
 
 /// VALIDATE FILE AND RETURN ONLY READ FILE
 FILE * validatingTheFile ();
@@ -69,11 +69,14 @@ void errorInCode ();
 /// PRINT ERROR! DESCRIPTION WITH MORE THAN 20 DIGITS!
 void errorInDescription ();
 
+/// PRINT FILE IN STRUCT FORMAT
+void printStructOfProducts (merchandise *, int, int );
+
 /// READ FILE PRODUCTS AND STORE IN STRUCT GOODS
-void readFileProducts (merchandise **, int * , int * );
+void readFileProducts (merchandise **, int *, int * );
 
 /// ANALYZE THE PRODUCTS THAT WILL BE IMPORTED
-Queue analyzeTheProducts (merchandise * , int , int , int * );
+Queue analyzeTheProducts (merchandise *, int, int, int * );
 
 /// PRINT THE CONTENTS OF THE QUEUE
 void printQueueOfProducts (Queue );
@@ -88,7 +91,7 @@ int totalWeight (Queue );
 void printValueAndWeight (Queue, int );
 
 /// CLEANING THE FIELDS OF THE STRUCT
-void clearStruct (merchandise **, int * , int * );
+void clearStruct (merchandise **, int *, int * );
 //###############################################################################
 
 //#################################### MAIN #####################################
@@ -101,21 +104,13 @@ int main()
     readFileProducts (&products, &quantityOfProducts, &maximumWeight);
     initQueue (queueOfProducts);
     queueOfProducts = analyzeTheProducts (products, quantityOfProducts, maximumWeight, &quantityOfProductImported);
-    printQueueOfProducts (queueOfProducts);
-    printValueAndWeight (queueOfProducts, quantityOfProductImported);
+    //printQueueOfProducts (queueOfProducts);
+    //printValueAndWeight (queueOfProducts, quantityOfProductImported);
 
     clearStruct (&products, &quantityOfProducts, &maximumWeight);
 
     // Print file in string format /
-    cout << endl << " " << quantityOfProducts << " - " << maximumWeight;
-
-    for (int cont1 = 0; cont1 < quantityOfProducts; cont1++)
-    {
-        cout << endl << endl << " CODE: " << products[cont1].code;
-        cout << endl << " DESCRIPTION: "  << products[cont1].description;
-        cout << endl << " VALUE: "        << products[cont1].value;
-        cout << endl << " WEIGHT: "       << products[cont1].weight << endl << endl;
-    }
+    printStructOfProducts (products, quantityOfProducts, maximumWeight);
 
     return 0;
 }
@@ -141,7 +136,7 @@ void chooseColor (int color)
 //###############################################################################
 
 //FUNÇÃO PARA REFERENCIAR LINHAS E COLUNAS PARA IMPRESSÃO
-void Goto_xy(int row, int column)
+void goto_XY (int row, int column)
 {
     HANDLE Saida;
 
@@ -249,7 +244,7 @@ void exceedingLimit ()
 //###############################################################################
 
 /// PRINT NO PRODUCTS IN FILE
-void printWithoutProducts()
+void printWithoutProducts ()
 {
     int cont;
 
@@ -280,7 +275,7 @@ void printWithoutProducts()
 //###############################################################################
 
 /// PRINT THE CONTAINER DOES NOT SUPPORT ANY PRODUCTS
-void printHeavierProducts()
+void printHeavierProducts ()
 {
     int cont;
 
@@ -311,7 +306,7 @@ void printHeavierProducts()
 //###############################################################################
 
 /// PRINT ERROR! CODE WITH MORE THAN 5 DIGITS!
-void errorInCode()
+void errorInCode ()
 {
     int cont;
 
@@ -342,7 +337,7 @@ void errorInCode()
 //###############################################################################
 
 /// PRINT ERROR! DESCRIPTION WITH MORE THAN 20 DIGITS!
-void errorInDescription()
+void errorInDescription ()
 {
     int cont;
 
@@ -369,6 +364,71 @@ void errorInDescription()
 
     chooseColor(white);
     exit(1);
+}
+//###############################################################################
+
+/// PRINT FILE IN STRUCT FORMAT
+void printStructOfProducts (merchandise * products, int quantityOfProducts, int maximumWeight)
+{
+    int cont1, cont2;
+
+    // Print file in string format /
+    chooseColor(blue);
+    cout << " \332\304\304\304\304\304\304\304\304\304\304\304\304\304\304\304\277" << endl << " \263";
+
+    chooseColor(white);
+    printf("%d - %d g", quantityOfProducts, maximumWeight);
+
+    goto_XY (1, 17);
+    chooseColor(blue);
+    cout << "\263" << endl <<  " \300\304\304\304\304\304\304\304\304\304\304\304\304\304\304\304\331" << endl;
+
+    for (cont1 = 0; cont1 < quantityOfProducts; cont1++)
+    {
+        chooseColor(blue);
+        cout << " \332\304\304\304";
+
+        for (cont2 = 0; cont2 < 5; cont2++)
+            cout << "\304\304\304\304\304\304";
+
+        cout << "\277" << endl << " \263";
+
+        chooseColor(white);
+        printf("CODE: %-5s", products[cont1].code);
+
+        chooseColor(blue);
+        cout << "\t\t\t   \263" << endl << " \263";
+
+        chooseColor(white);
+        printf("DESCRIPTION: %-20s", products[cont1].description);
+
+        chooseColor(blue);
+        cout << "\263" << endl << " \263";
+
+        chooseColor(white);
+        printf("VALUE: %-13d", products[cont1].value);
+
+        chooseColor(blue);
+        cout << "\t\t   \263" << endl << " \263";
+
+        chooseColor(white);
+        printf("WEIGHT: %-12d", products[cont1].weight);
+
+        chooseColor(blue);
+        cout << "\t\t   \263" << endl << " \300\304\304\304";
+
+        for (cont2 = 0; cont2 < 5; cont2++)
+            cout << "\304\304\304\304\304\304";
+
+        cout << "\331" << endl << endl;
+    }
+
+    chooseColor(white);
+
+    /* Controls the time for analysis */
+    Sleep(5000); //
+
+    system("cls");
 }
 //###############################################################################
 
@@ -449,17 +509,7 @@ void readFileProducts (merchandise ** products, int * quantityOfProducts, int * 
                 (*quantityOfProducts -= 1);
         }
 
-        /* Print file in string format /
-        cout << endl << " " << (*quantityOfProducts) << " - " << (*maximumWeight);
-
-        for (cont1 = 0; cont1 < (*quantityOfProducts); cont1++)
-        {
-            cout << endl << endl << " CODE: " << (*products)[cont1].code;
-            cout << endl << " DESCRIPTION: "  << (*products)[cont1].description;
-            cout << endl << " VALUE: "        << (*products)[cont1].value;
-            cout << endl << " WEIGHT: "       << (*products)[cont1].weight << endl << endl;
-        }
-        */
+        printStructOfProducts((*products), (*quantityOfProducts), (*maximumWeight));
 
         if (structProductsEmpty == true)
             printHeavierProducts();
@@ -770,7 +820,7 @@ void printValueAndWeight(Queue queueOfProducts, int quantityOfProductImported)
     printf (" %d g", totalWeight(queueOfProducts));
 
     chooseColor(blue);
-    Goto_xy ((12 + (2 * quantityOfProductImported)), 46);
+    goto_XY ((12 + (2 * quantityOfProductImported)), 46);
     cout << "   \263" << endl << "\t     \300";
 
     for (cont = 0; cont < 2; cont++)
@@ -789,7 +839,6 @@ void printValueAndWeight(Queue queueOfProducts, int quantityOfProductImported)
 /// CLEANING THE FIELDS OF THE STRUCT
 void clearStruct (merchandise **products, int * quantityOfProducts, int * maximumWeight)
 {
-
     int cont = 0, cont2 = 0;
 
     while (cont < (*quantityOfProducts))
@@ -801,6 +850,7 @@ void clearStruct (merchandise **products, int * quantityOfProducts, int * maximu
         cont++;
     }
 
-  //  (*quantityOfProducts) = 0;
+    (*quantityOfProducts) = 0;
     (*maximumWeight) = 0;
 }
+//###############################################################################
