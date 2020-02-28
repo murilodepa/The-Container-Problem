@@ -16,6 +16,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <windows.h>
+#include <conio.h>
 
 using namespace std;
 //###############################################################################
@@ -92,6 +93,9 @@ void printValueAndWeight (Queue, int );
 
 /// CLEANING THE FIELDS OF THE STRUCT
 void clearStruct (merchandise **, int *, int * );
+
+/// VALIDATE THE CHARACTER OF THE OUTPUT
+bool validateOutput ();
 //###############################################################################
 
 //#################################### MAIN #####################################
@@ -99,18 +103,22 @@ int main()
 {
     merchandise *products;
     Queue queueOfProducts;
-    int quantityOfProducts, maximumWeight, quantityOfProductImported;
+    int quantityOfProducts = 0, maximumWeight = 0, quantityOfProductImported = 0;
+    bool restart = true;
 
-    readFileProducts (&products, &quantityOfProducts, &maximumWeight);
-    initQueue (queueOfProducts);
-    queueOfProducts = analyzeTheProducts (products, quantityOfProducts, maximumWeight, &quantityOfProductImported);
-    //printQueueOfProducts (queueOfProducts);
-    //printValueAndWeight (queueOfProducts, quantityOfProductImported);
+    do
+    {
+        readFileProducts (&products, &quantityOfProducts, &maximumWeight);
+        initQueue (queueOfProducts);
+        queueOfProducts = analyzeTheProducts (products, quantityOfProducts, maximumWeight, &quantityOfProductImported);
+        printQueueOfProducts (queueOfProducts);
+        printValueAndWeight (queueOfProducts, quantityOfProductImported);
 
-    clearStruct (&products, &quantityOfProducts, &maximumWeight);
+        clearStruct (&products, &quantityOfProducts, &maximumWeight);
 
-    // Print file in string format /
-    printStructOfProducts (products, quantityOfProducts, maximumWeight);
+        restart = validateOutput();
+    }
+    while(restart == true);
 
     return 0;
 }
@@ -157,6 +165,8 @@ FILE * validatingTheFile ()
     FILE *inputFile;
     int cont;
     char fileName[100];
+
+    system("cls");
 
     chooseColor(green);
     cout << " ENTER FILE NAME: ";
@@ -372,6 +382,7 @@ void printStructOfProducts (merchandise * products, int quantityOfProducts, int 
 {
     int cont1, cont2;
 
+    system("cls");
     // Print file in string format /
     chooseColor(blue);
     cout << " \332\304\304\304\304\304\304\304\304\304\304\304\304\304\304\304\277" << endl << " \263";
@@ -427,8 +438,6 @@ void printStructOfProducts (merchandise * products, int quantityOfProducts, int 
 
     /* Controls the time for analysis */
     Sleep(5000); //
-
-    system("cls");
 }
 //###############################################################################
 
@@ -509,7 +518,8 @@ void readFileProducts (merchandise ** products, int * quantityOfProducts, int * 
                 (*quantityOfProducts -= 1);
         }
 
-        printStructOfProducts((*products), (*quantityOfProducts), (*maximumWeight));
+        /* Print the struct od products */
+        //printStructOfProducts((*products), (*quantityOfProducts), (*maximumWeight));
 
         if (structProductsEmpty == true)
             printHeavierProducts();
@@ -579,6 +589,8 @@ Queue analyzeTheProducts (merchandise * products, int quantityOfProducts, int ma
 /// PRINT THE CONTENTS OF THE QUEUE
 void printQueueOfProducts (Queue queueOfProducts)
 {
+    system("cls");
+
     merchandise products;
     int cont;
 
@@ -852,5 +864,33 @@ void clearStruct (merchandise **products, int * quantityOfProducts, int * maximu
 
     (*quantityOfProducts) = 0;
     (*maximumWeight) = 0;
+}
+//###############################################################################
+
+/// VALIDATE THE CHARACTER OF THE OUTPUT
+bool validateOutput ()
+{
+
+    char character;
+
+    do
+    {
+        chooseColor(green);
+        cout << " DO YOU WANT TO INSERT ANOTHER FILE <Y / N>? ";
+        character = getche();
+
+        if (character == 'n' || character == 'N')
+        {
+            system ("cls");
+            chooseColor(white);
+            return false;
+        }
+
+        if (character == 'y' || character == 'Y')
+            return true;
+
+        system ("cls");
+    }
+    while(character != 'Y' && character != 'y' && character != 'N' && character != 'n');
 }
 //###############################################################################
