@@ -113,9 +113,7 @@ int main()
         queueOfProducts = analyzeTheProducts (products, quantityOfProducts, maximumWeight, &quantityOfProductImported);
         printQueueOfProducts (queueOfProducts);
         printValueAndWeight (queueOfProducts, quantityOfProductImported);
-
         clearStruct (&products, &quantityOfProducts, &maximumWeight);
-
         restart = validateOutput();
     }
     while(restart == true);
@@ -870,7 +868,6 @@ void clearStruct (merchandise **products, int * quantityOfProducts, int * maximu
 /// VALIDATE THE CHARACTER OF THE OUTPUT
 bool validateOutput ()
 {
-
     char character;
 
     do
